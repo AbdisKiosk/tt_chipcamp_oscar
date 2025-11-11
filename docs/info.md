@@ -8,12 +8,10 @@ You can also include images in this folder and reference them in the markdown. E
 -->
 
 ## How it works
-
-Explain how your project works
+det virker kke
 
 ## How to test
-
-Explain how to use your project
+det gør du ikke
 
 ## External hardware
 
