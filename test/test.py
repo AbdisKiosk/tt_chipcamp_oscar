@@ -37,7 +37,7 @@ async def test_collatz_sequence(dut):
         next_n_expected = expected_sequence[i+1]
         dut_output = dut.uo_out.value
 
-        dut._log.info("Input: " + n + ", Output: " + dut_output + ", Expected: " + next_n_expected)
+        dut._log.info(f"Input: {n}, Output: {dut_output}, Expected: {next_n_expected}")
 
         # Assert that the DUT's output matches the expected next value
         # Set the input for the next iteration
