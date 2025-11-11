@@ -19,8 +19,8 @@ module tt_um_abdiskiosk_test (
   assign uio_out = 0;
   assign uio_oe  = 0;
 
-  reg [7:0] n_current;
-  reg [7:0] n_next;
+reg [7:0] n_current;
+reg [7:0] n_next;
 
   always @(*) begin
     if n_current == 1 begin
