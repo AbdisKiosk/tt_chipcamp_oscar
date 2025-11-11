@@ -43,6 +43,10 @@ async def test_collatz_sequence(dut):
         # Set the input for the next iteration
         n = dut_output
         dut.ui_in.value = n
+    for i in range(10):
+        dut_output = dut.uo_out.value
+        dut._log.info(f"Output: {dut_output}")
+
 
     # Final check to ensure the sequence ends at 1
     await ClockCycles(dut.clk, 1)
