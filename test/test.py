@@ -1,13 +1,10 @@
-# SPDX-FileCopyrightText: © 2024 Tiny Tapeout
-# SPDX-License-Identifier: Apache-2.0
-
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
-
 @cocotb.test()
-async def test_project(dut):
+async def test_collatz_sequence(dut):
+    """Test for n=3 sequence"""
     dut._log.info("Start")
 
     # Set the clock period to 10 us (100 KHz)
@@ -23,18 +20,33 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
 
-    dut._log.info("Test project behavior")
+    dut._log.info("Test Collatz sequence for n=3")
 
-    # Set the input values you want to test
-    dut.ui_in.value = 20
-    dut.uio_in.value = 30
+    # The sequence for n=3 is 3, 10, 5, 16, 8, 4, 2, 1
+    expected_sequence = [3, 10, 5, 16, 8, 4, 2, 1]
 
-    # Wait for one clock cycle to see the output values
+    # Set initial input
+    n = expected_sequence[0]
+    dut.ui_in.value = n
+
+    # Iterate through the sequence to check the DUT's output at each step
+    for i in range(len(expected_sequence) - 1):
+        # Wait for one clock cycle for the module to compute the next value
+        await ClockCycles(dut.clk, 1)
+
+        next_n_expected = expected_sequence[i+1]
+        dut_output = dut.uo_out.value
+
+        dut._log.info(f"Input: {n}, Output: {dut_output}, Expected: {next_n_expected}")
+
+        # Assert that the DUT's output matches the expected next value
+        assert dut_output == next_n_expected, f"For input {n}, expected {next_n_expected} but got {dut_output}"
+
+        # Set the input for the next iteration
+        n = dut_output
+        dut.ui_in.value = n
+
+    # Final check to ensure the sequence ends at 1
     await ClockCycles(dut.clk, 1)
-
-    # The following assersion is just an example of how to check the output values.
-    # Change it to match the actual expected output of your module:
-    assert dut.uo_out.value == 50
-
-    # Keep testing the module by changing the input values, waiting for
-    # one or more clock cycles, and asserting the expected output values.
+    assert dut.uo_out.value == 1
+    dut._log.info("Collatz sequence test passed")
