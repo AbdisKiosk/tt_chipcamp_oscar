@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-`default_nettype none
+default_nettype none
 
 module tt_um_abdiskiosk_test (
     input  wire [7:0] ui_in,    // Dedicated inputs
@@ -19,11 +19,11 @@ module tt_um_abdiskiosk_test (
   assign uio_out = 0;
   assign uio_oe  = 0;
 
-reg [7:0] n_current;
-reg [7:0] n_next;
+  reg [7:0] n_current;
+  reg [7:0] n_next;
 
   always @(*) begin
-    if n_current == 1 begin
+    if (n_current == 1) begin
       n_next = 1;
 
     end else if (n_current[0] == 0) begin
@@ -43,5 +43,4 @@ reg [7:0] n_next;
 
   // Assign the calculated next value to the output
   assign uo_out = n_next;
-
 endmodule
