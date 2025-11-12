@@ -1,18 +1,8 @@
-<!---
-
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
-
 ## How it works
-det virker kke
+The system calculates a sequence of numbers based on the value entered by the user. It ensures all numbers in the sequence remain within 8-bit range (0–255) and does not use any external hardware. Processing is all done internally and only results fitting the 8-bit limit are valid.
 
 ## How to test
-det gør du ikke
+Test by entering any number so that the calculated sequence stays within the 8-bit range. For example, choose numbers whose sequence never exceeds 255. Observe the result and verify that outputs conform to the 8-bit limitation to confirm correct functionality.
 
 ## External hardware
-
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+No external hardware is required for operation or testing.
