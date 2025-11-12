@@ -35,17 +35,16 @@ async def test_collatz_sequence(dut):
         await ClockCycles(dut.clk, 1)
 
         next_n_expected = expected_sequence[i+1]
-        dut_output = dut.uo_out.value
+        dut_output = dut.uo_out.value.integer
 
         dut._log.info(f"Input: {n}, Output: {dut_output}, Expected: {next_n_expected}")
 
         # Assert that the DUT's output matches the expected next value
+        assert dut_output == next_n_expected
+
         # Set the input for the next iteration
         n = dut_output
         dut.ui_in.value = n
-    for i in range(10):
-        dut_output = dut.uo_out.value
-        dut._log.info(f"Output: {dut_output}")
 
 
     # Final check to ensure the sequence ends at 1
