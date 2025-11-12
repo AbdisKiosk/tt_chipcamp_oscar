@@ -4,7 +4,7 @@ from cocotb.triggers import ClockCycles
 
 @cocotb.test()
 async def test_collatz_sequence(dut):
-    """Test for n=3 sequence"""
+    """Test for n=25 sequence"""
     dut._log.info("Start")
 
     # Set the clock period to 10 us (100 KHz)
@@ -20,10 +20,11 @@ async def test_collatz_sequence(dut):
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
 
-    dut._log.info("Test Collatz sequence for n=3")
+    dut._log.info("Test Collatz sequence for n=25")
 
-    # The sequence for n=3 is 3, 10, 5, 16, 8, 4, 2, 1
-    expected_sequence = [3, 10, 5, 16, 8, 4, 2, 1]
+    # The sequence for n=25 is:
+    # 25, 76, 38, 19, 58, 29, 88, 44, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1
+    expected_sequence = [25, 76, 38, 19, 58, 29, 88, 44, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1]
 
     # Set initial input
     n = expected_sequence[0]
@@ -40,12 +41,11 @@ async def test_collatz_sequence(dut):
         dut._log.info(f"Input: {n}, Output: {dut_output}, Expected: {next_n_expected}")
 
         # Assert that the DUT's output matches the expected next value
-        assert dut_output == next_n_expected
+        assert dut_output == next_n_expected, f"Fejl ved trin {i}: fik {dut_output}, forventede {next_n_expected}"
 
         # Set the input for the next iteration
         n = dut_output
         dut.ui_in.value = n
-
 
     # Final check to ensure the sequence ends at 1
     await ClockCycles(dut.clk, 1)
